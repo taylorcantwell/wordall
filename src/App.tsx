@@ -7,12 +7,11 @@ const MAX_INPUT_LENGTH = 30;
 const CHARACTERS_PER_ROW = 5;
 const CORRECT_POSITION = 'CORRECT_POSITION';
 const INCORRECT_POSITION = 'INCORRECT_POSITION';
-const ROW_LENGTH = 6;
 
 const useWordallGame = (_word: string) => {
   const [word] = useState(_word);
   const [input, setInput] = useState('');
-  const activeRow = Math.floor(input.length / ROW_LENGTH);
+  const activeRow = Math.floor(input.length / (CHARACTERS_PER_ROW + 1)); // +1 for START_NEW_ROW signalling a new row
   const minCharsAllowed = activeRow * CHARACTERS_PER_ROW;
   const maxCharsAllowed = minCharsAllowed + CHARACTERS_PER_ROW;
   const inputLength = input
@@ -68,6 +67,7 @@ const useWordallGame = (_word: string) => {
       .split('')
       .map((letter, index) => ({ letter, index }));
 
+    // Adjust the letters index to be between 0 and 4 repeating to align with the word
     const inputLetters = input
       .toLowerCase()
       .split('')
@@ -92,7 +92,7 @@ const useWordallGame = (_word: string) => {
       return {
         ...letter,
         status,
-        activeRow: activeRow === Math.floor(index / 5),
+        activeRow: activeRow === Math.floor(index / CHARACTERS_PER_ROW),
       };
     });
 
