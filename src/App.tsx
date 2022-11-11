@@ -74,23 +74,23 @@ const useWordallGame = (_word: string) => {
       .filter((letter) => letter !== START_NEW_ROW)
       .map((letter, index) => ({ letter, index: index % 5 }));
 
-    const inputLettersWithStatuses = inputLetters.map((letter, index) => {
-      const matchingLetter = wordLetters.find(
-        (wordLetter) => wordLetter.letter === letter.letter
+    const inputLettersWithStatuses = inputLetters.map((inputLetter, index) => {
+      const matchingWordLetter = wordLetters.find(
+        (wordLetter) => wordLetter.letter === inputLetter.letter
       );
 
       let status = 'not-in-word';
 
-      if (matchingLetter) {
+      if (matchingWordLetter) {
         status = INCORRECT_POSITION;
 
-        if (matchingLetter.index === letter.index) {
+        if (matchingWordLetter.index === inputLetter.index) {
           status = CORRECT_POSITION;
         }
       }
 
       return {
-        ...letter,
+        ...inputLetter,
         status,
         activeRow: activeRow === Math.floor(index / CHARACTERS_PER_ROW),
       };
